@@ -13,8 +13,8 @@
 #define _DIST_MAX 400 // maximum distance to be measured (unit: mm)
 #define _DIST_ALPHA 0.5
 #define _DUTY_MIN 550 // servo full clockwise position (0 degree)
-#define _DUTY_NEU 1480 // servo neutral position (90 degree)
-#define _DUTY_MAX 2400 // servo full counterclockwise position (180 degree)
+#define _DUTY_NEU 1550 // servo neutral position (90 degree)
+#define _DUTY_MAX 2550 // servo full counterclockwise position (180 degree)
 
 // global variables
 float timeout; // unit: us
@@ -70,7 +70,7 @@ void loop() {
 
 // adjust servo position according to the USS read value
 
-// add your code here!z
+// add your code here!
   DUTY = (dist_ema - 180) * (2000/179) + 550;
   
   if(dist_ema <= 180.0) {
@@ -82,13 +82,14 @@ void loop() {
    else if (dist_ema <= 360){
      myservo.writeMicroseconds(DUTY);
    }
-
+// 범위 내에서 LED 점등
   if (dist_ema >= 180 && dist_ema <= 360) {
     analogWrite(PIN_LED, 0);   
   }
   else {
     analogWrite(PIN_LED, 255);
   }
+  
 // update last sampling time
   last_sampling_time += INTERVAL;
 }
